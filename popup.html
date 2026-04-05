@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Usage Bar Colors</h1>
+
+    <section class="live-usage" id="liveUsage">
+      <p class="loading">Loading usage...</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="settings">
+      <h2>Thresholds</h2>
+      <div class="field">
+        <label for="yellowThreshold">Yellow starts at</label>
+        <div class="input-group">
+          <input type="number" id="yellowThreshold" min="1" max="99" value="50">
+          <span>%</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="redThreshold">Red starts at</label>
+        <div class="input-group">
+          <input type="number" id="redThreshold" min="1" max="99" value="80">
+          <span>%</span>
+        </div>
+      </div>
+
+      <h2>Colors</h2>
+      <div class="field">
+        <label for="greenColor">Green (low usage)</label>
+        <input type="color" id="greenColor" value="#22c55e">
+      </div>
+      <div class="field">
+        <label for="yellowColor">Yellow (moderate)</label>
+        <input type="color" id="yellowColor" value="#eab308">
+      </div>
+      <div class="field">
+        <label for="redColor">Red (high usage)</label>
+        <input type="color" id="redColor" value="#ef4444">
+      </div>
+    </section>
+
+    <div class="actions">
+      <button id="saveBtn">Save</button>
+      <button id="resetBtn" class="secondary">Reset defaults</button>
+    </div>
+
+    <p class="status" id="status"></p>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
