@@ -1,6 +1,6 @@
 # Claude Usage Bar Colors
 
-A Chrome/Edge extension that makes Claude.ai's usage limit bars change color based on how much you've used — so you can tell at a glance if you're running low.
+A browser extension that makes Claude.ai's usage limit bars change color based on how much you've used, so you can tell at a glance when you're getting close to the limit.
 
 ![Preview](screenshots/preview.png)
 
@@ -14,6 +14,7 @@ A Chrome/Edge extension that makes Claude.ai's usage limit bars change color bas
 - **Extra usage detection** — shows if extra usage is ON/OFF, Unlimited, or has a spending limit
 - **Auto-refresh** — popup updates every 3 seconds without closing
 - **No blue flash** — bars are hidden until colored, so you never see the default blue
+- **Focused scope** — only runs on `https://claude.ai/settings/usage`
 
 ## Default Thresholds
 
@@ -25,18 +26,16 @@ A Chrome/Edge extension that makes Claude.ai's usage limit bars change color bas
 
 ## Install
 
-### From GitHub (free)
+### Load locally
 
 1. Download the [latest release](../../releases/latest) or click **Code > Download ZIP**
 2. Unzip the folder
-3. Open `chrome://extensions` (Chrome) or `edge://extensions` (Edge)
-4. Enable **Developer mode** (toggle in top-right)
+3. Open `edge://extensions` in Microsoft Edge
+4. Enable **Developer mode**
 5. Click **Load unpacked** and select the unzipped folder
-6. Go to [claude.ai/settings/usage](https://claude.ai/settings/usage) and see it in action
+6. Open [claude.ai/settings/usage](https://claude.ai/settings/usage)
 
-### From Edge Add-ons (coming soon)
-
-Will be available for free on the Microsoft Edge Add-ons store.
+If you want to test it in another Chromium browser, the same folder can also be loaded there.
 
 ## Usage
 
@@ -49,9 +48,9 @@ Will be available for free on the Microsoft Edge Add-ons store.
 ## Privacy
 
 This extension:
-- Only runs on `claude.ai`
+- Only runs on `https://claude.ai/settings/usage`
 - Only reads usage percentages from the page DOM
-- Stores your settings locally via `chrome.storage.sync`
+- Stores your settings locally in the browser sync storage
 - Does **not** collect, transmit, or share any data
 - Has no analytics, tracking, or external network requests
 

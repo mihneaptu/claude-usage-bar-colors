@@ -30,8 +30,8 @@ function getColor(percent) {
 // Fetch real usage from the active tab
 function fetchUsage() {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (!tabs[0] || !tabs[0].url || !tabs[0].url.includes('claude.ai')) {
-      liveUsage.innerHTML = '<p class="loading">Open claude.ai to see usage</p>';
+    if (!tabs[0] || !tabs[0].url || !tabs[0].url.includes('claude.ai/settings/usage')) {
+      liveUsage.innerHTML = '<p class="loading">Open claude.ai/settings/usage to see live data</p>';
       return;
     }
 
@@ -81,6 +81,7 @@ function renderUsageBars(bars) {
 
     const item = document.createElement('div');
     item.className = 'usage-item';
+    item.dataset.percent = String(bar.percent);
     item.innerHTML = `
       <div class="usage-header">
         <label class="toggle">
@@ -111,23 +112,18 @@ function updateBarColors() {
   const items = liveUsage.querySelectorAll('.usage-item');
   items.forEach((item) => {
     const checkbox = item.querySelector('input[type="checkbox"]');
-    const label = checkbox.dataset.barLabel;
     const enabled = checkbox.checked;
-    const percentText = item.querySelector('.usage-percent').textContent;
-    const match = percentText.match(/(\d+)%/);
-    if (match) {
-      const percent = parseInt(match[1]);
-      const color = enabled ? getColor(percent) : '#5b9bf5';
-      item.querySelector('.bar-fill').style.backgroundColor = color;
-      item.querySelector('.bar-track').style.opacity = enabled ? '1' : '0.4';
-    }
+    const percent = parseFloat(item.dataset.percent || '0');
+    const color = enabled ? getColor(percent) : '#5b9bf5';
+    item.querySelector('.bar-fill').style.backgroundColor = color;
+    item.querySelector('.bar-track').style.opacity = enabled ? '1' : '0.4';
   });
 }
 
 // Smart update: refresh percentages/badges without losing checkbox states
 function refreshUsage() {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (!tabs[0] || !tabs[0].url || !tabs[0].url.includes('claude.ai')) return;
+    if (!tabs[0] || !tabs[0].url || !tabs[0].url.includes('claude.ai/settings/usage')) return;
 
     chrome.tabs.sendMessage(tabs[0].id, { type: 'getUsage' }, (response) => {
       if (chrome.runtime.lastError || !response || !response.bars) return;
@@ -146,6 +142,7 @@ function refreshUsage() {
 
         const enabled = item.querySelector('input[type="checkbox"]').checked;
         const color = enabled ? getColor(bar.percent) : '#5b9bf5';
+        item.dataset.percent = String(bar.percent);
 
         // Update percent text
         const percentEl = item.querySelector('.usage-percent');
@@ -215,7 +212,7 @@ saveBtn.addEventListener('click', () => {
     setTimeout(() => { status.textContent = ''; }, 2000);
 
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0] && tabs[0].url && tabs[0].url.includes('claude.ai')) {
+      if (tabs[0] && tabs[0].url && tabs[0].url.includes('claude.ai/settings/usage')) {
         chrome.tabs.sendMessage(tabs[0].id, { type: 'settingsUpdated', settings });
       }
     });

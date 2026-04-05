@@ -1,13 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Claude Usage Bar Colors",
+  "short_name": "Usage Colors",
   "version": "1.0.0",
   "description": "Dynamic color-coded progress bars for Claude.ai usage limits — green, yellow, red based on usage percentage.",
   "permissions": ["storage", "activeTab"],
-  "host_permissions": ["https://claude.ai/*"],
+  "host_permissions": ["https://claude.ai/settings/usage*"],
   "content_scripts": [
     {
-      "matches": ["https://claude.ai/*"],
+      "matches": ["https://claude.ai/settings/usage*"],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
